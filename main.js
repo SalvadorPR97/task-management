@@ -30,6 +30,11 @@ addButton.addEventListener("click", (e) => {
 function addTask(txtTask) {
     const newLi = document.createElement("li");
     const newP = document.createElement("p");
+    newP.addEventListener("click", () => {
+        newSpan.style.textDecoration == "line-through"
+            ? (newSpan.style.textDecoration = "none")
+            : (newSpan.style.textDecoration = "line-through");
+    });
     const newSpan = document.createElement("span");
     newSpan.textContent = txtTask;
     const closeButton = document.createElement("button");
