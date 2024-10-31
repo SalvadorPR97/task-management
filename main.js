@@ -1,6 +1,5 @@
 import "./style.css";
 const allDivs = document.querySelectorAll("div");
-
 allDivs[0].className = "container";
 allDivs[1].className = "search";
 allDivs[2].className = "li-container";
@@ -8,24 +7,23 @@ const divNoPendingTasks = allDivs[3];
 divNoPendingTasks.className = "empty";
 allDivs[4].className = "task-count";
 
-const ulTasks = document.querySelector("ul");
+let ulTasks = document.querySelector("ul");
 
 const addButton = document.querySelector("button");
 addButton.className = "btn-add";
 
 const txtField = document.querySelector("input");
+txtField.value = "";
 
 const allSpans = document.querySelectorAll("span");
 const spanCounter = allSpans[1];
 
-addButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (txtField.value != "") {
-        addTask(txtField.value);
-        countTask();
-        txtField.value = "";
-    }
-});
+function countTask() {
+    spanCounter.textContent = ulTasks.childElementCount;
+    spanCounter.textContent == 0
+        ? (divNoPendingTasks.style.display = "block")
+        : (divNoPendingTasks.style.display = "none");
+}
 
 function addTask(txtTask) {
     const newLi = document.createElement("li");
@@ -49,9 +47,12 @@ function addTask(txtTask) {
     newLi.append(newP, closeButton);
     ulTasks.append(newLi);
 }
-function countTask() {
-    spanCounter.textContent = ulTasks.childElementCount;
-    spanCounter.textContent == 0
-        ? (divNoPendingTasks.style.display = "block")
-        : (divNoPendingTasks.style.display = "none");
-}
+
+addButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (txtField.value != "") {
+        addTask(txtField.value);
+        countTask();
+        txtField.value = "";
+    }
+});
