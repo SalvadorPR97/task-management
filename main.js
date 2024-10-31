@@ -1,10 +1,10 @@
-import './style.css'
+import "./style.css";
 const allDivs = document.querySelectorAll("div");
 
 allDivs[0].className = "container";
 allDivs[1].className = "search";
 allDivs[2].className = "li-container";
-const divNoPendingTasks = allDivs[3]
+const divNoPendingTasks = allDivs[3];
 divNoPendingTasks.className = "empty";
 allDivs[4].className = "task-count";
 
@@ -18,17 +18,16 @@ const txtField = document.querySelector("input");
 const allSpans = document.querySelectorAll("span");
 const spanCounter = allSpans[1];
 
-
 addButton.addEventListener("click", (e) => {
     e.preventDefault();
-    addTask(txtField.value);
-    if (divNoPendingTasks.style.display = "block"){
-        divNoPendingTasks.style.display = "none";
+    if (txtField.value != "") {
+        addTask(txtField.value);
+        countTask();
+        txtField.value = "";
     }
-    countTask();
-})
+});
 
-function addTask(txtTask){
+function addTask(txtTask) {
     const newLi = document.createElement("li");
     const newP = document.createElement("p");
     const newSpan = document.createElement("span");
@@ -36,6 +35,10 @@ function addTask(txtTask){
     const closeButton = document.createElement("button");
     closeButton.className = "btn-delete";
     closeButton.textContent = "X";
+    closeButton.addEventListener("click", () => {
+        ulTasks.removeChild(newLi);
+        countTask();
+    });
 
     newP.append(newSpan);
     newLi.append(newP, closeButton);
@@ -43,4 +46,7 @@ function addTask(txtTask){
 }
 function countTask() {
     spanCounter.textContent = ulTasks.childElementCount;
+    spanCounter.textContent == 0
+        ? (divNoPendingTasks.style.display = "block")
+        : (divNoPendingTasks.style.display = "none");
 }
