@@ -15,15 +15,20 @@ addButton.className = "btn-add";
 
 const txtField = document.querySelector("input");
 
+const allSpans = document.querySelectorAll("span");
+const spanCounter = allSpans[1];
+
+
 addButton.addEventListener("click", (e) => {
     e.preventDefault();
-    anadirTarea(txtField.value);
+    addTask(txtField.value);
     if (divNoPendingTasks.style.display = "block"){
         divNoPendingTasks.style.display = "none";
     }
+    countTask();
 })
 
-function anadirTarea(txtTask){
+function addTask(txtTask){
     const newLi = document.createElement("li");
     const newP = document.createElement("p");
     const newSpan = document.createElement("span");
@@ -35,4 +40,7 @@ function anadirTarea(txtTask){
     newP.append(newSpan);
     newLi.append(newP, closeButton);
     ulTasks.append(newLi);
+}
+function countTask() {
+    spanCounter.textContent = ulTasks.childElementCount;
 }
