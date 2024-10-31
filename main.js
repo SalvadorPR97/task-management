@@ -4,7 +4,8 @@ const allDivs = document.querySelectorAll("div");
 allDivs[0].className = "container";
 allDivs[1].className = "search";
 allDivs[2].className = "li-container";
-allDivs[3].className = "empty";
+const divNoPendingTasks = allDivs[3]
+divNoPendingTasks.className = "empty";
 allDivs[4].className = "task-count";
 
 const ulTasks = document.querySelector("ul");
@@ -17,6 +18,9 @@ const txtField = document.querySelector("input");
 addButton.addEventListener("click", (e) => {
     e.preventDefault();
     anadirTarea(txtField.value);
+    if (divNoPendingTasks.style.display = "block"){
+        divNoPendingTasks.style.display = "none";
+    }
 })
 
 function anadirTarea(txtTask){
