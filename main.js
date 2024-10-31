@@ -7,7 +7,10 @@ const divNoPendingTasks = allDivs[3];
 divNoPendingTasks.className = "empty";
 allDivs[4].className = "task-count";
 
+let taskList = localStorage.getItem("taskList").split(",");
 let ulTasks = document.querySelector("ul");
+
+
 
 const addButton = document.querySelector("button");
 addButton.className = "btn-add";
@@ -18,11 +21,25 @@ txtField.value = "";
 const allSpans = document.querySelectorAll("span");
 const spanCounter = allSpans[1];
 
+taskList.forEach((task) => {
+    addTask(task);
+})
+spanCounter.textContent = ulTasks.childElementCount;
+spanCounter.textContent == 0
+        ? (divNoPendingTasks.style.display = "block")
+        : (divNoPendingTasks.style.display = "none");
 function countTask() {
     spanCounter.textContent = ulTasks.childElementCount;
     spanCounter.textContent == 0
         ? (divNoPendingTasks.style.display = "block")
         : (divNoPendingTasks.style.display = "none");
+    taskList = [];
+    let spanList = document.querySelectorAll(".spanTask");
+    spanList.forEach((span)=>{
+        taskList.push(span.textContent);
+    })
+    localStorage.clear();
+    localStorage.setItem("taskList", taskList);
 }
 
 function addTask(txtTask) {
@@ -34,6 +51,7 @@ function addTask(txtTask) {
             : (newSpan.style.textDecoration = "line-through");
     });
     const newSpan = document.createElement("span");
+    newSpan.className = "spanTask";
     newSpan.textContent = txtTask;
     const closeButton = document.createElement("button");
     closeButton.className = "btn-delete";
@@ -42,7 +60,6 @@ function addTask(txtTask) {
         ulTasks.removeChild(newLi);
         countTask();
     });
-
     newP.append(newSpan);
     newLi.append(newP, closeButton);
     ulTasks.append(newLi);
